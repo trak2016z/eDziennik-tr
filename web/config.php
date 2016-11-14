@@ -7,4 +7,5 @@ define('DOC_ROOT', $_SERVER['DOCUMENT_ROOT']);    //C:/wamp/www/
 define('PROJECT_DIRECTORY', DOC_ROOT."Repositories/eDziennik/");
 
 
+
 ?>

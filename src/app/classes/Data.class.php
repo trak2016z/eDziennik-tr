@@ -2,6 +2,7 @@
 
 class Data {
 
+    //Pobranie danych z tablicy superglobalnej
     static public function getData($fieldName) {
         if(isset($_GET[$fieldName]))
             return $_GET[$fieldName];
