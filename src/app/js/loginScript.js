@@ -8,20 +8,28 @@ function log() {
             password: $('#password').val()
         },
         function(response){
-            var user = JSON.parse(response);
-            console.log(checkUserType(user));
-            if(checkUserType(user)) {
-                window.location = "/Repositories/eDziennik/web/teachers";
+           // console.log(response);
+          //  console.log(typeof(JSON.parse(response)));
+            if(typeof(JSON.parse(response)) == 'object') {
+                var user = JSON.parse(response);
+                if (checkUserType(user) == 'admin') {
+                    window.location.href = "/Repositories/eDziennik/web/teachers";
+                }
+                else if (checkUserType(user) == 'teacher') {
+                    console.log("teacher");
+                    // window.location = "/Repositories/eDziennik/web/student/" + user.ID;
+                }
+                else {
+                    console.log("student");
+                }
             }
-            else {
-                window.location = "/Repositories/eDziennik/web/student/" + user.ID;
-            }
+            else
+                $('#errorMessage').text(JSON.parse(response));
         }
     );
 }
 
 function checkUserType(responseObject) {
-    console.log(responseObject);
     if(responseObject[0].type) {
         return isAdmin(responseObject[0].type);
     }

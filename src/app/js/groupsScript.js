@@ -11,10 +11,10 @@ function init() {
     $('#addGroup').click(function() {
         showInsertForm = true;
         showHideInsertForm();
-    })
+    });
     $('#insertGroup').click(function() {
         addGroup();
-    })
+    });
     //Pobranie istniejących grup
     $.post(
         "get.php",
@@ -68,7 +68,10 @@ function completeTextField(groupName) {
 function prepareEditForm(element) {
     completeTextField(element.attr('name'));
     var id = element.attr("id").replace("edit_", '');
-    $('#updateGroupName').click(function() {updateGroup(id)});
+    $('#updateGroupName').on('click',function(){
+        updateGroup(id);
+        id = null;
+    });
 }
 
 //Funkcja dodająca wiersz z danymi grupy do tabeli
@@ -87,7 +90,6 @@ function createEditButton(id, name) {
 function createDeleteButton(id) {
     return "<input type='button' id='delete_" + id + "' value='Usuń' />";
 }
-
 //Funkcja do edycji grupy
 function updateGroup(id) {
     $.post(
@@ -96,17 +98,20 @@ function updateGroup(id) {
             table: "group",
             id: {ID: id},
             set: {name: $('#editedGroupName').val()},
-            operator: ''
+            operator: '',
         },
         function(response){
-            if(JSON.parse(response))
+            if(JSON.parse(response)){
                 $('#groupName_' + id).text($('#editedGroupName').val());
 
+            }
             else
                 $('#errorMessage').text("Wystąpił błąd");
         }
     );
 }
+
+
 
 //Funkcja do dodawania nowej grupy
 function addGroup() {
@@ -114,8 +119,7 @@ function addGroup() {
         "insert.php",
         {
             table: "group",
-            data: {name: $('#insertedGroupName').val()},
-            operator: ''
+            data: {name: $('#insertedGroupName').val()}
         },
         function(response){
             if(JSON.parse(response)) {

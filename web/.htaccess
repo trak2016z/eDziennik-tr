@@ -6,11 +6,8 @@ RewriteEngine On
 RewriteRule ^([0-9a-zA-Z\-]+)/?$ index.php?controller=$1 [L]
 RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)?$ index.php?controller=$1&id=$2 [L]
 RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.php?controller=$1&id=$2&bookmark=$3 [L]
-#RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.html?controller=$1&action=$2&op=$3&id=$4 [L]
-#RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.html?controller=$1&action=$2&op=$3&id=$4&c=$5 [L]
-#RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.html?controller=$1&action=$2&op=$3&id=$4&c=$5$d=$6 [L]
-#RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.html?page=$1&app=$2&op=$3&id=$4&c=$5$d=$6&e=$7 [L]
-#RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.html?page=$1&app=$2&op=$3&id=$4&c=$5$d=$6&e=$7&f=$8 [L]
+RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.php?controller=$1&id=$2&bookmark=$3&ids=$4 [L]
+
 
 
 
