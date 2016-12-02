@@ -1,6 +1,9 @@
 window.onload = init;
 
 function init() {
+    sessionStorage.setItem('isUserLogged', true);
+    console.log(sessionStorage.getItem('isUserLogged'));
+    controlLogoutButton();
     //Pobranie wszystkich nauczycieli
     $.post(
         "get.php",

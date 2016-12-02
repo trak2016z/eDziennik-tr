@@ -14,10 +14,10 @@ if($table)
         case 'group':           $result = $databaseHandle->selectData("SELECT * FROM `group`");
                                 echo json_encode($result); break;
         case 'note_category':   $teacherId = Data::getData('teacherId');
-                                if(isset($teacherId))
+                                if($teacherId)
                                     $result = $databaseHandle->selectData("SELECT * FROM `note_category` WHERE teacher_ID = {$teacherId}");
-                                else
-                                    $result = $databaseHandle->selectData("SELECT * FROM `note_category`");
+                              //  else
+                                 //   $result = $databaseHandle->selectData("SELECT * FROM `note_category`");
                                 echo json_encode($result); break;
         case 'student':         $result = $databaseHandle->selectData("SELECT * FROM `student` WHERE group_ID = {$_POST['group_ID']}");
                                 echo json_encode($result); break;

@@ -15,7 +15,8 @@ function init() {
     $.post(
         "get.php",
         {
-            table: "note_category"
+            table: "note_category",
+            teacherId: 1
         },
         function(response){
             var noteCategories = JSON.parse(response);

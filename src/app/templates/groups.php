@@ -22,4 +22,4 @@
     </form>
 </div>
 <table id="groupsList" name="groupsList"></table>
-<script src="../src/app/js/groupsScript.js" type="text/javascript"></script>
+<script src="<?php echo "../src/app/js/groupsScript.js"?>" type="text/javascript"></script>

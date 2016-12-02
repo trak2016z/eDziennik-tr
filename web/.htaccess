@@ -3,10 +3,10 @@ Options FollowSymLinks
 
 RewriteEngine On
 
-RewriteRule ^([0-9a-zA-Z\-]+)/?$ index.php?controller=$1 [L]
-RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)?$ index.php?controller=$1&id=$2 [L]
-RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.php?controller=$1&id=$2&bookmark=$3 [L]
-RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.php?controller=$1&id=$2&bookmark=$3&ids=$4 [L]
+RewriteRule ^([0-9a-zA-Z\-]+)/?$ index.php?option=$1 [L]
+RewriteRule ^([0-9a-zA-Z\-]+)/([0-9]+)?$ index.php?option=$1&groupId=$2 [L]
+RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/?$ index.php?option=$1&groupId=$2&bookmark=$3 [L]
+RewriteRule ^([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9a-zA-Z\-]+)/([0-9]+)/?$ index.php?option=$1&groupId=$2&bookmark=$3&id=$4 [L]
 
 
 
