@@ -1,7 +1,8 @@
+<span id="errorMessage" name="errorMessage"></span>
 <form id="registerForm" name="registerForm">
     <fieldset>
         <label for="name">Name: </label>
-        <input type="text" id="name" name="name" required pattern="[A-Z¯¥ÊÆÑŒ£Ó][a-zŸ¿¹êœæñó³]{1,19}"/>
+        <input type="text" id="name" name="name" />
     </fieldset>
     <!--<span id="nameMessage"></span>-->
     <fieldset>

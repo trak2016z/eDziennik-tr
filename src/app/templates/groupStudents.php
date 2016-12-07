@@ -4,26 +4,33 @@
 </ul>
 <span id="errorMessage" name="errorMessage"></span>
 <input type="button" id="addStudent" name="addStudent" value="Dodaj ucznia" />
-<div id="addStudentForm">
-    <form>
-        <label for="studentName">Name: </label>
-        <input type="text" id="studentName" name="studentName" />
-        <span id="nameMessage"></span>
-        <label for="studentSurname">Surname: </label>
-        <input type="text" id="studentSurname" name="studentSurname" />
+<div>
+    <form id="addStudentForm">
+        <fieldset>
+            <label for="studentName">Imię: </label>
+            <input type="text" id="studentName" name="studentName" />
+        </fieldset>
+        <fieldset>
+            <label for="studentSurname">Nazwisko: </label>
+            <input type="text" id="studentSurname" name="studentSurname" />
+        </fieldset>
         <label for="addedStudentGroupName">Grupa: </label>
         <select id="addedStudentGroupName" name="groupName"></select>
-        <input type="button" id="saveStudent" name="saveStudent" value="Zapisz" />
+        <input type="submit" id="saveStudent" name="saveStudent" value="Zapisz" />
     </form>
 </div>
-<div id="editStudentForm">
-    <form>
-        <label for="editedStudentName">Imię: </label>
-        <input type="text" id="editedStudentName" name="editedStudentName" />
-        <label for="editedStudentSurname">Nazwisko: </label>
-        <input type="text" id="editedStudentSurname" name="editedStudentSurname" />
+<div>
+    <form id="editStudentForm">
+        <fieldset>
+            <label for="editedStudentName">Imię: </label>
+            <input type="text" id="editedStudentName" name="editedStudentName" />
+        </fieldset>
+        <fieldset>
+            <label for="editedStudentSurname">Nazwisko: </label>
+            <input type="text" id="editedStudentSurname" name="editedStudentSurname" />
+        </fieldset>
         <select id="editedStudentGroupName" name="groupName"></select>
-        <input type="button" id="updateStudent" name="updateStudent" value="Zapisz" />
+        <input type="submit" id="updateStudent" name="updateStudent" value="Zapisz" />
     </form>
 </div>
 <table id="studentsList" name="studentsList"></table>

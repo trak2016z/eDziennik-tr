@@ -1,17 +1,21 @@
-window.onload = init;
-var showEditForm = false;
-var showInsertForm = false;
-
-function init() {
+$('document').ready(function () {
+    var showEditForm = false;
+    var showInsertForm = false;
     showHideEditForm();
     showHideInsertForm();
     $('#addSubject').click(function() {
         showInsertForm = true;
         showHideInsertForm();
-    })
-    $('#insertSubject').click(function() {
-        addSubject();
-    })
+    });
+    $('#insertSubject').on('click', function(event) {
+        event.preventDefault();
+        if($('#subjectInsertForm').valid()) {
+            $('#errorMessage').empty();
+            addSubject();
+        }
+        else
+            $('#errorMessage').text("Nie można zapisać. Formularz zawiera błędy.");
+    });
     $.post(
         "get.php",
         {
@@ -22,116 +26,206 @@ function init() {
             createSubjectsList(subjects);
         }
     );
-}
 
-function showHideEditForm() {
-    if(showEditForm)
-        $('#subjectEditForm').show();
-    else
-        $('#subjectEditForm').hide();
-}
+    $('#subjectInsertForm').validate({
+        errorElement: "span",
+        rules:{
+            insertedSubjectName: {
+                required: true,
+                subjectNameMatch: true,
+                subjectNameUniqueness: true
+            }
+        },
+        messages: {
+            insertedSubjectName: {
+                required: "Podaj nazwę przedmiotu",
+                subjectNameMatch: "Nazwa zawiera niepoprawne znaki. Nazwa musi się zaczynać od dużej litery. Dozwolone znaki to małe i duże litery, " +
+                "cyfry od 0 do 9, spacje oraz znak _.",
+                subjectNameUniqueness: "Podana nazwa już istnieje"
+            }
+        }
+    });
 
-function showHideInsertForm() {
-    if(showInsertForm)
-        $('#subjectInsertForm').show();
-    else
-        $('#subjectInsertForm').hide();
-}
+    $('#subjectEditForm').validate({
+        errorElement: "span",
+        rules:{
+            editedSubjectName: {
+                required: true,
+                subjectNameMatch: true,
+                subjectNameUniqueness: true
+            }
+        },
+        messages: {
+            editedSubjectName: {
+                required: "Podaj nazwę przedmiotu",
+                subjectNameMatch: "Nazwa zawiera niepoprawne znaki. Nazwa musi się zaczynać od dużej litery. Dozwolone znaki to małe i duże litery, " +
+                "cyfry od 0 do 9, spacje oraz znak _.",
+                subjectNameUniqueness: "Podana nazwa już istnieje"
+            }
+        }
+    });
 
-function createSubjectsList(subjects) {
-    for(var key in subjects) {
-        appendSubject(subjects[key]);
-        $("#edit_" + subjects[key].ID).click(function() {
-            prepareEditForm($(this));
-            showEditForm = true;
-            showHideEditForm();
+    $.validator.addMethod("subjectNameMatch",
+        function(value, element) {
+            return this.optional( element ) || /^[A-ZŹŻĄĘĆŃŚŁÓ][a-zźżąęśćńół0-9_\s]{1,19}$/.test( value );
+    });
+
+    $.validator.addMethod("subjectNameUniqueness", function(value, element) {
+        var responseValue;
+        var subjectId = $(element).attr('data-id')?$(element).attr('data-id'):null;
+        $.ajax({
+            type: 'POST',
+            url:  "get.php",
+            data: {
+                action: "checkSubjectName",
+                name: value,
+                subjectId: subjectId
+            },
+            success: function(d){
+                responseValue = JSON.parse(d);
+                console.log(responseValue);
+            },
+            error: function(request, error){
+                 console.log(arguments);
+                 console.log(error);
+              //  alert(" Can't do because: " + error);
+            },
+            async: false
         });
-        $("#delete_" + subjects[key].ID).click(function() {
-            deleteSubject($(this)) });
+        return responseValue;
+    });
+
+    function showHideEditForm() {
+        if(showEditForm) {
+            showInsertForm = false;
+            showHideInsertForm();
+            $('#subjectEditForm').show();
+        }
+        else
+            $('#subjectEditForm').hide();
     }
-}
 
-function completeTextField(subjectName) {
-    $('#editedSubjectName').val(subjectName);
-}
-
-function prepareEditForm(element) {
-    completeTextField(element.attr('name'));
-    var id = element.attr("id").replace("edit_", '');
-    $('#updateSubjectName').click(function() {updateSubject(id)});
-}
-
-function appendSubject(subjectData) {
-    var tableRow = "<tr><td id='subjectName_" + subjectData.ID + "'>" + subjectData.name + "</td><td>" + createEditButton(subjectData.ID, subjectData.name) + "</td> + " +
-        "<td>" + createDeleteButton(subjectData.ID) + "</td></tr>";
-    $('#subjectsList').append(tableRow);
-}
-
-function createEditButton(id, name) {
-    return "<input type='button' id='edit_" + id + "' name='" + name + "' value='Edytuj' />";
-}
-
-function createDeleteButton(id) {
-    return "<input type='button' id='delete_" + id + "' value='Usuń' />";
-}
-
-function updateSubject(id) {
-    $.post(
-        "update.php",
-        {
-            table: "subject",
-            id: {ID: id},
-            set: {name: $('#editedSubjectName').val()},
-            operator: ''
-        },
-        function(response){
-            if(JSON.parse(response))
-                $('#subjectName_' + id).text($('#editedSubjectName').val());
-
-            else
-                $('#errorMessage').text("Wystąpił błąd");
+    function showHideInsertForm() {
+        if(showInsertForm) {
+            showEditForm = false;
+            showHideEditForm();
+            $('#subjectInsertForm').show();
         }
-    );
-}
+        else
+            $('#subjectInsertForm').hide();
+    }
 
-function addSubject() {
-    $.post(
-        "insert.php",
-        {
-            table: "subject",
-            data: {name: $('#insertedSubjectName').val()},
-            operator: ''
-        },
-        function(response){
-            if(JSON.parse(response)) {
-                var addedSubject = JSON.parse(response)[0];
-                appendSubject(addedSubject);
+    function createSubjectsList(subjects) {
+        for(var key in subjects) {
+            appendSubject(subjects[key]);
+            $("#edit_" + subjects[key].ID).click(function() {
+                prepareEditForm($(this));
+                showEditForm = true;
+                showHideEditForm();
+            });
+            $("#delete_" + subjects[key].ID).click(function() {
+                deleteSubject($(this)) });
+        }
+    }
+
+    function completeTextField(subjectName, id) {
+        console.log(subjectName);
+        $('#editedSubjectName').val(subjectName);
+        $('#editedSubjectName').attr("data-id", id);
+    }
+
+    function prepareEditForm(element) {
+        var id = element.attr("id").replace("edit_", '');
+        completeTextField(element.attr('data-subjectname'), id);
+        $('#updateSubjectName').on('click', function(event) {
+            event.preventDefault();
+            if($('#subjectEditForm').valid()) {
+                $('#errorMessage').empty();
+                updateSubject(id);
             }
             else
-                $('#errorMessage').text("Wystąpił błąd");
-        }
-    );
-}
+                $('#errorMessage').text("Nie można zaktualizować. Formularz zawiera błędy.");
+        })
+    }
 
-function deleteSubject(element) {
-    var id = element.attr("id").replace("delete_", '');
-    $.post(
-        "delete.php",
-        {
-            table: "subject",
-            data: {id: id},
-            operator: ''
-        },
-        function(response){
-            if(JSON.parse(response)) {
-                removeSubject(id);
+    function appendSubject(subjectData) {
+        var tableRow = "<tr><td id='subjectName_" + subjectData.ID + "'>" + subjectData.name + "</td><td>" + createEditButton(subjectData.ID, subjectData.name) + "</td> + " +
+            "<td>" + createDeleteButton(subjectData.ID) + "</td></tr>";
+        $('#subjectsList').append(tableRow);
+    }
+
+    function createEditButton(id, name) {
+        return "<input type='button' id='edit_" + id + "' name='edit_" + id + "' data-subjectname='" + name + "' value='Edytuj' />";
+    }
+
+    function createDeleteButton(id) {
+        return "<input type='button' id='delete_" + id + "' value='Usuń' />";
+    }
+
+    function updateSubject(id) {
+        $.post(
+            "update.php",
+            {
+                table: "subject",
+                id: {ID: id},
+                set: {name: $('#editedSubjectName').val()},
+                operator: ''
+            },
+            function(response){
+                if(JSON.parse(response)) {
+                    $('#subjectName_' + id).text($('#editedSubjectName').val());
+                    showEditForm = false;
+                    showHideEditForm();
+                }
+
+                else
+                    $('#errorMessage').text("Wystąpił błąd");
             }
-            else
-                $('#errorMessage').text("Wystąpił błąd");
-        }
-    );
-}
+        );
+    }
 
-function removeSubject(id) {
-    $('#delete_' + id).parent().parent().remove();
-}
+    function addSubject() {
+        $.post(
+            "insert.php",
+            {
+                table: "subject",
+                data: {name: $('#insertedSubjectName').val()},
+                operator: ''
+            },
+            function(response){
+                if(JSON.parse(response)) {
+                    var addedSubject = JSON.parse(response)[0];
+                    appendSubject(addedSubject);
+                    showInsertForm = false;
+                    showHideInsertForm();
+                }
+                else
+                    $('#errorMessage').text("Wystąpił błąd");
+            }
+        );
+    }
+
+    function deleteSubject(element) {
+        var id = element.attr("id").replace("delete_", '');
+        $.post(
+            "delete.php",
+            {
+                table: "subject",
+                data: {id: id},
+                operator: ''
+            },
+            function(response){
+                if(JSON.parse(response)) {
+                    removeSubject(id);
+                }
+                else
+                    $('#errorMessage').text("Wystąpił błąd");
+            }
+        );
+    }
+
+    function removeSubject(id) {
+        $('#delete_' + id).parent().parent().remove();
+    }
+
+});

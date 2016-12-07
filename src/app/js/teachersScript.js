@@ -12,6 +12,7 @@ function init() {
         },
         function(response){
             var teachers = JSON.parse(response);
+            console.log(teachers);
             createTeachersList(teachers);
         }
     );

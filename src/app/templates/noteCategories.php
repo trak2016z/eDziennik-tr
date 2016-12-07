@@ -7,18 +7,22 @@
 <p>Kategorie ocen</p>
 <span id="errorMessage" name="errorMessage"></span>
 <input type="button" id="addNoteCategory" name="addNoteCategory" value="Dodaj kategorię oceny" />
-<div id="noteCategoryInsertForm">
-    <form>
-        <label for="insertedNoteCategoryName">Nazwa: </label>
-        <input type="text" id="insertedNoteCategoryName" name="insertedNoteCategoryName" />
-        <input type="button" id="insertNoteCategory" name="insertNoteCategory" value="Zapisz" />
+<div>
+    <form id="noteCategoryInsertForm">
+        <fieldset>
+            <label for="insertedNoteCategoryName">Nazwa: </label>
+            <input type="text" id="insertedNoteCategoryName" name="insertedNoteCategoryName" />
+        </fieldset>
+        <input type="submit" id="insertNoteCategory" name="insertNoteCategory" value="Zapisz" />
     </form>
 </div>
-<div id="noteCategoryEditForm">
-    <form>
-        <label for="editedNoteCategoryName">Nazwa: </label>
-        <input type="text" id="editedNoteCategoryName" name="editedNoteCategoryName" />
-        <input type="button" id="updateNoteCategoryName" name="updateNoteCategoryName" value="Zapisz" />
+<div>
+    <form id="noteCategoryEditForm">
+        <fieldset>
+            <label for="editedNoteCategoryName">Nazwa: </label>
+            <input type="text" id="editedNoteCategoryName" name="editedNoteCategoryName" />
+        </fieldset>
+        <input type="submit" id="updateNoteCategoryName" name="updateNoteCategoryName" value="Zapisz" />
     </form>
 </div>
 <table id="noteCategoriesList" name="noteCategoriesList"></table>

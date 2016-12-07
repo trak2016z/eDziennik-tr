@@ -7,18 +7,22 @@
 <p>Przedmioty</p>
 <span id="errorMessage" name="errorMessage"></span>
 <input type="button" id="addSubject" name="addSubject" value="Dodaj przedmiot" />
-<div id="subjectInsertForm">
-    <form>
-        <label for="insertedSubjectName">Nazwa: </label>
-        <input type="text" id="insertedSubjectName" name="insertedSubjectName" />
-        <input type="button" id="insertSubject" name="insertSubject" value="Zapisz" />
+<div>
+    <form id="subjectInsertForm">
+        <fieldset>
+            <label for="insertedSubjectName">Nazwa: </label>
+            <input type="text" id="insertedSubjectName" name="insertedSubjectName" />
+        </fieldset>
+        <input type="submit" id="insertSubject" name="insertSubject" value="Zapisz" />
     </form>
 </div>
-<div id="subjectEditForm">
-    <form>
-        <label for="editedSubjectName">Nazwa: </label>
-        <input type="text" id="editedSubjectName" name="editedSubjectName" />
-        <input type="button" id="updateSubjectName" name="updateSubjectName" value="Zapisz" />
+<div>
+    <form id="subjectEditForm">
+        <fieldset>
+            <label for="editedSubjectName">Nazwa: </label>
+            <input type="text" id="editedSubjectName" name="editedSubjectName" />
+        </fieldset>
+        <input type="submit" id="updateSubjectName" name="updateSubjectName" value="Zapisz" />
     </form>
 </div>
 <table id="subjectsList" name="subjectsList"></table>

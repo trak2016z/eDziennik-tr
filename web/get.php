@@ -2,9 +2,11 @@
 
 require_once("config.php");
 require_once("loader.php");
+
 $table = Data::getData('table');
 $action = Data::getData('action');
 $databaseHandle = Database::getInstance();
+
 if($table)
     switch($table) {
         case 'teacher':         $result = $databaseHandle->selectData("SELECT * FROM `teacher` WHERE type <> 1");
@@ -29,18 +31,67 @@ if($table)
                                 nc.ID WHERE n.subject_ID = {$_POST['subjectId']} AND n.student_ID = {$_POST['studentId']}");
                                 echo json_encode($result); break;
     }
-else if($action == 'checkLogin') {
-    $logins = $databaseHandle->selectData("SELECT login FROM `student` WHERE login = '{$_POST['data']['login']}'");
-    if(!is_array($logins)) {
-        $logins = $databaseHandle->selectData("SELECT login FROM `teacher` WHERE login = '{$_POST['data']['login']}'");
-        if(!is_array($logins)) {
-            echo json_encode(true);
-        }
-        else
-            echo json_encode(false);
+else if($action)
+    switch($action) {
+        case 'checkLogin':              $logins = $databaseHandle->selectData("SELECT login FROM `student` WHERE login = '{$_POST['login']}'");
+                                        if(!is_array($logins)) {
+                                            $logins = $databaseHandle->selectData("SELECT login FROM `teacher` WHERE login = '{$_POST['login']}'");
+                                        if(!is_array($logins)) {
+                                            echo json_encode(true);
+                                        }
+                                        else
+                                            echo json_encode(false);
+                                        }
+                                        else
+                                            echo json_encode(false);
+                                        break;
+        case 'checkSubjectName':        if(!empty(Data::getData('subjectId')))
+                                            $subjectName = $databaseHandle->selectData("SELECT name FROM `subject` WHERE name = '{$_POST['name']}'
+                                        AND ID <> {$_POST['subjectId']}");
+                                        else
+                                            $subjectName = $databaseHandle->selectData("SELECT name FROM `subject` WHERE name = '{$_POST['name']}'");
+                                        if(!is_array($subjectName)) {
+                                            echo json_encode(true);
+                                        }
+                                        else
+                                            echo json_encode(false);
+                                        break;
+        case 'checkGroupName':          if(!empty(Data::getData('groupId')))
+                                            $groupName = $databaseHandle->selectData("SELECT name FROM `group` WHERE name = '{$_POST['name']}'
+                                        AND ID <> {$_POST['groupId']}");
+                                        else
+                                            $groupName = $databaseHandle->selectData("SELECT name FROM `group` WHERE name = '{$_POST['name']}'");
+                                        if(!is_array($groupName)) {
+                                            echo json_encode(true);
+                                        }
+                                        else
+                                            echo json_encode(false);
+                                        break;
+        case 'checkNoteCategoryName':   if(!empty(Data::getData('noteCategoryId')))
+                                            $noteCategoryName = $databaseHandle->selectData("SELECT name FROM `note_category` WHERE name = '{$_POST['name']}'
+                                            AND ID <> {$_POST['noteCategoryId']}");
+                                        else
+                                            $noteCategoryName = $databaseHandle->selectData("SELECT name FROM `note_category` WHERE name = '{$_POST['name']}'");
+                                        if(!is_array($noteCategoryName)) {
+                                            echo json_encode(true);
+                                        }
+                                        else
+                                            echo json_encode(false);
+                                        break;
+        case 'checkGroupSubject':       if(!empty(Data::getData('id')))
+                                            $groupSubject = $databaseHandle->selectData("SELECT ID FROM `subject_teacher` WHERE subject_ID = '{$_POST['subjectId']}'
+                                             AND group_ID = {$_POST['groupId']} AND ID <> {$_POST['id']}");
+                                        else
+                                            $groupSubject = $databaseHandle->selectData("SELECT ID FROM `subject_teacher` WHERE subject_ID = '{$_POST['subjectId']}'
+                                             AND group_ID = {$_POST['groupId']}");
+                                        if(!is_array($groupSubject)) {
+                                            echo json_encode(true);
+                                        }
+                                        else
+                                            echo json_encode(false);
+                                        break;
     }
-    else
-        echo json_encode(false);
-}
+
+
 
 ?>

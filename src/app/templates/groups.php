@@ -7,18 +7,22 @@
 <p>Grupy</p>
 <span id="errorMessage" name="errorMessage"></span>
 <input type="button" id="addGroup" name="addGroup" value="Dodaj grupę" />
-<div id="groupInsertForm">
-    <form>
-        <label for="insertedGroupName">Nazwa: </label>
-        <input type="text" id="insertedGroupName" name="insertedGroupName" />
-        <input type="button" id="insertGroup" name="insertGroup" value="Zapisz" />
+<div>
+    <form id="groupInsertForm">
+        <fieldset>
+            <label for="insertedGroupName">Nazwa: </label>
+            <input type="text" id="insertedGroupName" name="insertedGroupName" />
+        </fieldset>
+        <input type="submit" id="insertGroup" name="insertGroup" value="Zapisz" />
     </form>
 </div>
-<div id="groupEditForm">
-    <form>
-        <label for="editedGroupName">Nazwa: </label>
-        <input type="text" id="editedGroupName" name="editedGroupName" />
-        <input type="button" id="updateGroupName" name="updateGroupName" value="Zapisz" />
+<div>
+    <form id="groupEditForm">
+        <fieldset>
+            <label for="editedGroupName">Nazwa: </label>
+            <input type="text" id="editedGroupName" name="editedGroupName" />
+        </fieldset>
+        <input type="submit" id="updateGroupName" name="updateGroupName" value="Zapisz" />
     </form>
 </div>
 <table id="groupsList" name="groupsList"></table>
