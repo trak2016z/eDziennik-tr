@@ -3,9 +3,9 @@
     class LoginController extends BasicController {
 
     static private $permitions = [
-        "admin" => ['teachers', 'groups', 'subjects', 'noteCategories', 'groupStudents', 'groupSubjects', 'groupNotes', 'studentNotes', 'userData'],
-        "teacher" => ['groups', 'noteCategories', 'groupStudents', 'groupSubjects', 'groupNotes', 'studentNotes', 'userData'],
-        "student" => ['notes', 'userData', 'changePassword']
+        "admin" => ['teachers', 'groups', 'subjects', 'noteCategories', 'groupStudents', 'groupSubjects', 'groupNotes', 'studentNotes', 'userAccount'],
+        "teacher" => ['groups', 'noteCategories', 'groupStudents', 'groupSubjects', 'groupNotes', 'studentNotes', 'userAccount'],
+        "student" => ['notes', 'userAccount', 'changePassword']
     ];
 
     public function __construct() {
@@ -14,8 +14,10 @@
     }
 
     static public function logInUser($userData) {
-        foreach($userData as $key => $value)
+        foreach($userData as $key => $value) {
             $_SESSION[$key] = $value;
+            setcookie($key, $value, time() + (86400 * 30), "/");
+        }
     }
 
     static public function checkAuthentication($controllerName) {
@@ -27,7 +29,7 @@
     static public function checkAuthorization($controllerName) {
         $userType = '';
         if(($controllerName !== 'login'&&$controllerName !== 'register')) {
-            if ($_SESSION['type'])
+            if (!empty($_SESSION['type']))
                 $userType = ($_SESSION['type'] == 1) ? "admin" : "teacher";
             else
                 $userType = "student";
@@ -36,7 +38,6 @@
         else
             return true;
     }
-
 
     public function checkSessionExist() {
     if(isset($_SESSION)&&!empty($_SESSION)) {
@@ -63,7 +64,11 @@
 
     static public function logOutUser() {
         $_SESSION = [];
+        foreach ( $_COOKIE as $key => $value ) {
+            setcookie( $key, $value, time() - 3600, '/' );
+        }
     }
+
 }
 
 ?>

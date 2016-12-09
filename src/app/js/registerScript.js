@@ -73,17 +73,17 @@ $('document').ready(function () {
     $.validator.addMethod("nameSurnameMatch",
         function(value, element) {
             return this.optional( element ) || /^[A-ZŹŻĄĘĆŃŚŁÓ][a-zźżąęśćńół]{1,19}$/.test( value );
-        });
+    });
 
     $.validator.addMethod("loginMatch",
         function(value, element) {
             return this.optional( element ) || /^[A-Za-z][A-Za-z0-9_]{7,31}$/.test( value );
-        });
+    });
 
     $.validator.addMethod("passwordMatch",
         function(value, element) {
             return this.optional( element ) || /([A-Za-z0-9#@*!&$_]){8,32}/.test( value );
-        });
+    });
 
     $.validator.addMethod("loginUniqueness", function(value) {
         var responseValue;

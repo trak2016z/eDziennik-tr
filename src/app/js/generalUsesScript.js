@@ -1,26 +1,28 @@
-sessionStorage.setItem('isUserLogged', false);
-
 function controlLogoutButton() {
-    if(sessionStorage.getItem('isUserLogged') == 'true')
+    if($.cookie("ID")) {
         $('#logOutButton').show();
-    else
+        $('#userAccountButton').show();
+    }
+    else {
         $('#logOutButton').hide();
+        $('#userAccountButton').hide();
+    }
 }
 
 $('document').ready(function () {
-    console.log(sessionStorage.getItem('isUserLogged'));
     controlLogoutButton();
+    $('#userAccountButton').click(function() {
+        window.location.href = "/Repositories/eDziennik/web/userAccount";
+    });
+
     $('#logOutButton').click(function() {
         $.post(
             "logOut.php",
             function(data){
                 console.log("Dane otrzymane: " + data);
-                sessionStorage.setItem('isUserLogged', false);
                 controlLogoutButton();
                 window.location.href = "/Repositories/eDziennik/web/login";
             }
         );
-    })
-
-
+    });
 });

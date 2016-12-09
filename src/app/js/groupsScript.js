@@ -31,7 +31,6 @@ $('document').ready(function () {
         }
     );
 
-
     $('#groupInsertForm').validate({
         errorElement: "span",
         rules:{
@@ -181,7 +180,7 @@ $('document').ready(function () {
                 table: "group",
                 id: {ID: id},
                 set: {name: $('#editedGroupName').val()},
-                operator: '',
+                operator: ''
             },
             function(response){
                 if(JSON.parse(response)) {

@@ -177,7 +177,6 @@ $('document').ready(function () {
                     showEditForm = false;
                     showHideEditForm();
                 }
-
                 else
                     $('#errorMessage').text("Wystąpił błąd");
             }

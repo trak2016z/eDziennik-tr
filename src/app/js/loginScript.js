@@ -10,18 +10,17 @@ $('document').ready(function () {
             function(response){
                 if(typeof(JSON.parse(response)) == 'object') {
                     var user = JSON.parse(response);
-                    //console.log(user);
-
-                    console.log(sessionStorage.getItem('isUserLogged'));
                     if (checkUserType(user) == 'admin') {
                         window.location.href = "/Repositories/eDziennik/web/teachers";
                     }
                     else if (checkUserType(user) == 'teacher') {
-                        console.log("teacher");
                         window.location = "/Repositories/eDziennik/web/groups";
                     }
                     else {
-                        window.location = "/Repositories/eDziennik/web/notes";
+                        if(user.visited == 0)
+                            window.location = "/Repositories/eDziennik/web/changePassword";
+                        else
+                            window.location = "/Repositories/eDziennik/web/notes";
                     }
                 }
                 else

@@ -69,9 +69,10 @@ else if($action)
                                         break;
         case 'checkNoteCategoryName':   if(!empty(Data::getData('noteCategoryId')))
                                             $noteCategoryName = $databaseHandle->selectData("SELECT name FROM `note_category` WHERE name = '{$_POST['name']}'
-                                            AND ID <> {$_POST['noteCategoryId']}");
+                                            AND ID <> {$_POST['noteCategoryId']} AND teacher_ID = {$_POST['teacherId']}");
                                         else
-                                            $noteCategoryName = $databaseHandle->selectData("SELECT name FROM `note_category` WHERE name = '{$_POST['name']}'");
+                                            $noteCategoryName = $databaseHandle->selectData("SELECT name FROM `note_category` WHERE name = '{$_POST['name']}'
+                                            AND teacher_ID = {$_POST['teacherId']}");
                                         if(!is_array($noteCategoryName)) {
                                             echo json_encode(true);
                                         }
@@ -89,6 +90,22 @@ else if($action)
                                         }
                                         else
                                             echo json_encode(false);
+                                        break;
+        case 'checkPassword':           if(!empty(Data::getData('password'))&&!empty(Data::getData('studentId')))
+                                            $result = $databaseHandle->selectData("SELECT password FROM `student` WHERE ID = '{$_POST['studentId']}'");
+                                        if($result[0]['password'] !== Data::getData('password')) {
+                                            echo json_encode(true);
+                                        }
+                                        else
+                                            echo json_encode(false);
+                                        break;
+        case 'getStudentSubjects':      $result = $databaseHandle->selectData("SELECT s.ID, s.name FROM `subject` s JOIN `subject_teacher` st ON
+                                        s.ID = st.subject_ID WHERE st.group_ID = '{$_POST['group_ID']}'");
+                                        echo json_encode($result);
+                                        break;
+        case 'getStudentNotes':         $result = $databaseHandle->selectData("SELECT n.note, nc.name as categoryName FROM `note` n JOIN `note_category` nc ON
+                                        n.category_ID = nc.ID WHERE n.student_ID = '{$_POST['student_ID']}' AND n.subject_ID = '{$_POST['subject_ID']}'");
+                                        echo json_encode($result);
                                         break;
     }
 

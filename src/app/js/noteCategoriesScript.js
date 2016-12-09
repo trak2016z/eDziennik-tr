@@ -20,7 +20,7 @@ $('document').ready(function () {
         "get.php",
         {
             table: "note_category",
-            teacherId: 1
+            teacherId: $.cookie("ID")
         },
         function (response) {
             var noteCategories = JSON.parse(response);
@@ -78,7 +78,8 @@ $('document').ready(function () {
             data: {
                 action: "checkNoteCategoryName",
                 name: value,
-                noteCategoryId: noteCategoryId
+                noteCategoryId: noteCategoryId,
+                teacherId: $.cookie("ID")
             },
             success: function(d){
                 responseValue = JSON.parse(d);
@@ -189,7 +190,10 @@ $('document').ready(function () {
             "insert.php",
             {
                 table: "note_category",
-                data: {name: $('#insertedNoteCategoryName').val(), teacher_ID: 1},
+                data: {
+                    name: $('#insertedNoteCategoryName').val(),
+                    teacher_ID: $.cookie("ID")
+                },
                 operator: ''
             },
             function (response) {
