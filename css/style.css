@@ -1,0 +1,10 @@
+.formError {
+    border: 3px solid red;
+}
+
+.logout {
+    background-color: blue;
+} .cross {
+    width: 20px;
+    height: 20px;
+  }
