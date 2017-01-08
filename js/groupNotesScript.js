@@ -50,6 +50,9 @@ $('document').ready(function () {
             studentName: {
                 required: true
             },
+            categoryName: {
+                required: true
+            },
             note: {
                 required: true
             }
@@ -57,6 +60,9 @@ $('document').ready(function () {
         messages: {
             studentName: {
                 required: "Wybierz student"
+            },
+            categoryName: {
+                required: "Wybierz kategorię"
             },
             note: {
                 required: "Wybierz ocenę"
@@ -70,6 +76,9 @@ $('document').ready(function () {
             studentName: {
                 required: true
             },
+            categoryName: {
+                required: true
+            },
             note: {
                 required: true
             }
@@ -77,6 +86,9 @@ $('document').ready(function () {
         messages: {
             studentName: {
                 required: "Wybierz studenta"
+            },
+            categoryName: {
+                required: "Wybierz kategorię"
             },
             note: {
                 required: "Wybierz ocenę"
@@ -160,7 +172,7 @@ $('document').ready(function () {
         $.post(
             "http://localhost/Repositories/eDziennik/get.php",
             {
-                table: "note",
+                table: "group_notes",
                 studentId: $('#searchedStudentName option:selected').val(),
                 subjectId: subjectId
             },
@@ -269,7 +281,7 @@ $('document').ready(function () {
             "http://localhost/Repositories/eDziennik/update.php",
             {
                 table: "note",
-                id: {ID: id},
+                conditions: {ID: id},
                 set: {
                     category_ID: $('#editNoteCategoryName option:selected').val(),
                     note: $('#editStudentNote option:selected').val()

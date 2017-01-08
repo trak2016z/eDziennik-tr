@@ -2,63 +2,35 @@
 
 class Teacher {
 
-    private $ID;
-    private $name;
-    private $surname;
-    private $login;
-    private $password;
+    private $databaseHandle;
 
-    /*public function __construct($ID, $name, $surname, $login, $password) {
-        $this->ID = $ID;
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->login = $login;
-        $this->password = $password;
-    }*/
-
-    public function getTeacherId() {
-        return $this->ID;
+    public function __construct() {
+        $this->databaseHandle = Database::getInstance();
     }
 
-    public function setTeacherId($newId) {
-        $this->ID = $newId;
+    public function changeData($setData, $teacherId, $operator) {
+        $result = $this->databaseHandle->updateData('teacher', $setData, $teacherId, $operator);
+        echo json_encode($result);
     }
 
-    public function getTeacherName() {
-        return $this->name;
+    public function checkLogin($login) {
+        $result = $this->databaseHandle->selectData("SELECT login FROM `teacher` WHERE login = '{$login}'");
+        return (is_array($result))?false:true;
     }
 
-    public function setTeacherName($newName) {
-        $this->ID = $newName;
+    public function getAllTeachers() {
+        $result = $this->databaseHandle->selectData("SELECT * FROM `teacher` WHERE type <> 1");
+        echo json_encode($result);
     }
 
-    public function getTeacherSurname() {
-        return $this->surname;
+    public function addTeacher($data) {
+        $result = $this->databaseHandle->insertData('teacher', $data);
+        echo json_encode($result);
     }
 
-    public function setTeacherSurname($newSurname) {
-        $this->surname = $newSurname;
-    }
-
-    public function getTeacherLogin() {
-        return $this->login;
-    }
-
-    public function setTeacherLogin($newLogin) {
-        $this->login = $newLogin;
-    }
-
-    public function getTeacherPassword() {
-        return $this->password;
-    }
-
-    public function setTeacherPassword($newPassword) {
-        $this->password = $newPassword;
-    }
-
-    public function insert($teacherData = array()) {
-        $databaseHandle = Database::getInstance();
-        return $databaseHandle->insertData('teacher', $teacherData);
+    public function activateDeactivateTeacher($setData, $conditions, $operator) {
+        $result = $this->databaseHandle->updateData('teacher', $setData, $conditions, $operator);
+        echo json_encode($result);
     }
 }
 

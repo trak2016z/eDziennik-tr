@@ -4,7 +4,7 @@
 </ul>
 <span id="errorMessage" name="errorMessage"></span>
 <div id="addedStudentData" name="addedStudentData">
-    <img src="/Repositories/eDziennik/images/cross.png" alt="cross" id="hideAddedStudentData" name="hideAddedStudentData" />
+    <img src="/Repositories/eDziennik/images/cross.png" alt="cross" id="hideAddedStudentData" name="hideAddedStudentData" class="cross" />
         <span id="label" name="label">Imię: </span>
         <span id="addedStudentName" name="addedStudentName"></span>
     </span>

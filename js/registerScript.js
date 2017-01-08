@@ -2,14 +2,16 @@ $('document').ready(function () {
 
     function register() {
         $.post(
-             "register.php",
+             "insert.php",
              {
                  table: "teacher",
-                 name: $("#name").val(),
-                 surname: $("#surname").val(),
-                 login: $("#login").val(),
-                 password: $("#password").val(),
-                 passwordAgain: $("#passwordAgain").val()
+                 data: {
+                     name: $("#name").val(),
+                     surname: $("#surname").val(),
+                     login: $("#login").val(),
+                     password: $("#password").val(),
+                     passwordAgain: $("#passwordAgain").val()
+                 }
              },
              function(data){
                 if(JSON.parse(data))
@@ -84,7 +86,7 @@ $('document').ready(function () {
 
     $.validator.addMethod("passwordMatch",
         function(value, element) {
-            return this.optional( element ) || /([A-Za-z0-9#@*!&$_]){8,32}/.test( value );
+            return this.optional( element ) || /^([A-Za-z0-9#@*!&$_]){8,32}$/.test( value );
     });
 
     $.validator.addMethod("loginUniqueness", function(value) {

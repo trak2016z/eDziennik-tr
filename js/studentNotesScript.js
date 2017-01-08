@@ -40,7 +40,7 @@ $('document').ready(function () {
         $.post(
             "http://localhost/Repositories/eDziennik/get.php",
             {
-                table: "note",
+                table: "student_notes",
                 subjectId: $('#searchedSubjectName option:selected').val(),
                 studentId: studentId
             },

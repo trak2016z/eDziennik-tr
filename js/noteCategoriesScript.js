@@ -192,7 +192,7 @@ $('document').ready(function () {
             "update.php",
             {
                 table: "note_category",
-                id: {ID: id},
+                conditions: {ID: id},
                 set: {name: $('#editedNoteCategoryName').val()},
                 operator: ''
             },

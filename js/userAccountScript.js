@@ -71,7 +71,7 @@ $('document').ready(function () {
 
     $.validator.addMethod("passwordMatch",
         function(value, element) {
-            return this.optional( element ) || /([A-Za-z0-9#@*!&$_]){8,32}/.test( value );
+            return this.optional( element ) || /^([A-Za-z0-9#@*!&$_]){8,32}$/.test( value );
     });
 
     function changeUserData() {
@@ -79,7 +79,7 @@ $('document').ready(function () {
             "update.php",
             {
                 action: "changeUserData",
-                id: {ID: $.cookie("ID")},
+                conditions: {ID: $.cookie("ID")},
                 userType: checkUserType(),
                 set: {
                     name: $('#userName').val(),

@@ -2,38 +2,47 @@
 
 class Group {
 
-    private $ID;
-    private $name;
-    private $teacherId;
+    private $databaseHandle;
 
-    public function __construct($ID, $name, $teacherId) {
-        $this->ID = $ID;
-        $this->name = $name;
-        $this->teacherId = $teacherId;
+    public function __construct() {
+        $this->databaseHandle = Database::getInstance();
     }
 
-    public function getGroupId() {
-        return $this->ID;
+    public function checkNewGroupName($groupName) {
+        $result = $this->databaseHandle->selectData("SELECT name FROM `group` WHERE name = '{$groupName}'");
+        return is_array($result)?false:true;
     }
 
-    public function setGroupId($newId) {
-        $this->ID = $newId;
+    public function checkEditedGroupName($groupId, $groupName) {
+        $result = $this->databaseHandle->selectData("SELECT name FROM `group` WHERE name = '{$groupName}' AND ID <> {$groupId}");
+        return is_array($result)?false:true;
     }
 
-    public function getGroupName() {
-        return $this->name;
+    public function getAllGroups() {
+        $result = $this->databaseHandle->selectData("SELECT * FROM `group`");
+        echo json_encode($result);
     }
 
-    public function setGroupName($newName) {
-        $this->name = $newName;
+    public function getTeacherGroups($teacherId) {
+        $result = $this->databaseHandle->selectData("SELECT * FROM `group` g JOIN `subject_teacher` st ON g.ID = st.group_ID WHERE
+                                    st.teacher_ID = {$teacherId}");
+        echo json_encode($result);
     }
 
-    public function getGroupTeacherId() {
-        return $this->teacherId;
+    public function addGroup($data) {
+        $result = $this->databaseHandle->insertData('group', $data);
+        $insertedGroup = $this->databaseHandle->selectData("SELECT * FROM `group` ORDER BY ID DESC LIMIT 1");
+        echo json_encode($insertedGroup);
     }
 
-    public function setGroupTeacherId($newTeacherId) {
-        $this->teacherId = $newTeacherId;
+    public function updateGroup($setData, $conditions, $operator) {
+        $result = $this->databaseHandle->updateData('group', $setData, $conditions, $operator);
+        echo json_encode($result);
+    }
+
+    public function deleteGroup($conditions, $operator) {
+        $result = $this->databaseHandle->delete('group', $conditions, $operator);
+        echo json_encode($result);
     }
 }
 

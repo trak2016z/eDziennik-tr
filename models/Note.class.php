@@ -2,59 +2,33 @@
 
 class Note {
 
-    private $ID;
-    private $note;
-    private $studentId;
-    private $subjectId;
-    private $categoryId;
+    private $databaseHandle;
 
-    public function __construct($ID, $note, $studentId, $subjectId, $categoryId) {
-        $this->ID = $ID;
-        $this->note = $note;
-        $this->studentId = $studentId;
-        $this->subjectId = $subjectId;
-        $this->categoryId = $categoryId;
+    public function __construct() {
+        $this->databaseHandle = Database::getInstance();
     }
 
-    public function getNoteId() {
-        return $this->ID;
+    public function getNotes($studentId, $subjectId) {
+        $result = $this->databaseHandle->selectData("SELECT n.ID, n.note, n.category_ID, nc.name FROM `note` n JOIN `note_category` nc ON n.category_ID =
+                                nc.ID WHERE n.subject_ID = {$subjectId} AND n.student_ID = {$studentId}");
+        echo json_encode($result);
     }
 
-    public function setNoteId($newId) {
-        $this->ID = $newId;
+    public function addNote($data) {
+        $result = $this->databaseHandle->insertData('note', $data);
+        echo json_encode($result);
     }
 
-    public function getNote() {
-        return $this->note;
+    public function updateNote($setData, $conditions, $operator) {
+        $result = $this->databaseHandle->updateData('note', $setData, $conditions, $operator);
+        echo json_encode($result);
     }
 
-    public function setNote($newNote) {
-        $this->note = $newNote;
+    public function deleteNote($conditions, $operator) {
+        $result = $this->databaseHandle->delete('note', $conditions, $operator);
+        echo json_encode($result);
     }
 
-    public function getNoteStudentId() {
-        return $this->studentId;
-    }
-
-    public function setNoteStudentId($studentId) {
-        $this->studentId = $studentId;
-    }
-
-    public function getNoteSubjectId() {
-        return $this->subjectId;
-    }
-
-    public function setNoteSubjectId($newSubjectId) {
-        $this->subjectId = $newSubjectId;
-    }
-
-    public function getNoteCategoryId() {
-        return $this->categoryId;
-    }
-
-    public function setNoteCategoryId($newCategoryId) {
-        $this->categoryId = $newCategoryId;
-    }
 }
 
 ?>

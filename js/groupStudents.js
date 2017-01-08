@@ -195,7 +195,9 @@ $('document').ready(function () {
         $.post(
             "http://localhost/Repositories/eDziennik/get.php",
             {
-                table: "group"
+                table: "group",
+                teacher_ID: $.cookie("ID"),
+                type: $.cookie("type")
             },
             function (response) {
                 groups = JSON.parse(response);
@@ -360,7 +362,7 @@ $('document').ready(function () {
             "http://localhost/Repositories/eDziennik/update.php",
             {
                 table: "student",
-                id: {ID: id},
+                conditions: {ID: id},
                 set: {
                     name: $('#editedStudentName').val(),
                     surname: $('#editedStudentSurname').val(),

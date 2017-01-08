@@ -9,12 +9,13 @@ $('document').ready(function () {
         $.post(
             "get.php",
             {
-                action: "getStudentSubjects",
-                group_ID: $.cookie("groupID")
+                table: "student_subjects",
+                groupId: $.cookie("groupID")
             },
             function (response) {
                 var studentsSubjects = JSON.parse(response);
                 createStudentSubjectsList(studentsSubjects);
+                getStudentNotes();
             }
         )
     }
@@ -29,9 +30,9 @@ $('document').ready(function () {
         $.post(
             "get.php",
             {
-                action: "getStudentNotes",
-                student_ID: $.cookie("groupID"),
-                subject_ID: $('#studentSubjectName option:selected').val()
+                table: "student_notes",
+                studentId: $.cookie("ID"),
+                subjectId: $('#studentSubjectName option:selected').val()
             },
             function (response) {
                 var studentsNotes = JSON.parse(response);
@@ -47,7 +48,7 @@ $('document').ready(function () {
     }
 
     function appendNote(note) {
-        var tableRow = "<tr><td>" + note.note + "</td><td>" + note.categoryName +"</td></tr>";
+        var tableRow = "<tr><td>" + note.note + "</td><td>" + note.name +"</td></tr>";
         $('#studentNotesList').append(tableRow);
     }
 });

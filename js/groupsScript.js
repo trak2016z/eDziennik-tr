@@ -213,7 +213,7 @@ $('document').ready(function () {
             "update.php",
             {
                 table: "group",
-                id: {ID: id},
+                conditions: {ID: id},
                 set: {name: $('#editedGroupName').val()},
                 operator: ''
             },

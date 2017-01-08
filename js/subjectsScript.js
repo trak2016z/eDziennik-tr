@@ -50,8 +50,7 @@ $('document').ready(function () {
         messages: {
             insertedSubjectName: {
                 required: "Podaj nazwę przedmiotu",
-                subjectNameMatch: "Nazwa zawiera niepoprawne znaki. Nazwa musi się zaczynać od dużej litery. Dozwolone znaki to małe i duże litery, " +
-                "cyfry od 0 do 9, spacje oraz znak _.",
+                subjectNameMatch: "Nazwa zawiera niepoprawne znaki. Dozwolone znaki to małe i duże litery, cyfry od 0 do 9, spacje oraz znak _.",
                 subjectNameUniqueness: "Podana nazwa już istnieje"
             }
         }
@@ -69,8 +68,7 @@ $('document').ready(function () {
         messages: {
             editedSubjectName: {
                 required: "Podaj nazwę przedmiotu",
-                subjectNameMatch: "Nazwa zawiera niepoprawne znaki. Nazwa musi się zaczynać od dużej litery. Dozwolone znaki to małe i duże litery, " +
-                "cyfry od 0 do 9, spacje oraz znak _.",
+                subjectNameMatch: "Nazwa zawiera niepoprawne znaki. Dozwolone znaki to małe i duże litery, cyfry od 0 do 9, spacje oraz znak _.",
                 subjectNameUniqueness: "Podana nazwa już istnieje"
             }
         }
@@ -78,7 +76,7 @@ $('document').ready(function () {
 
     $.validator.addMethod("subjectNameMatch",
         function(value, element) {
-            return this.optional( element ) || /^[A-ZŹŻĄĘĆŃŚŁÓ][a-zźżąęśćńół0-9_\s]{1,19}$/.test( value );
+            return this.optional( element ) || /^[A-ZŹŻĄĘĆŃŚŁÓa-zźżąęśćńół0-9_\s]{1,20}$/.test( value );
     });
 
     $.validator.addMethod("subjectNameUniqueness", function(value, element) {
@@ -186,7 +184,7 @@ $('document').ready(function () {
             "update.php",
             {
                 table: "subject",
-                id: {ID: id},
+                conditions: {ID: id},
                 set: {name: $('#editedSubjectName').val()},
                 operator: ''
             },

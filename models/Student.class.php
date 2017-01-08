@@ -2,68 +2,51 @@
 
 class Student {
 
-    private $ID;
-    private $name;
-    private $surname;
-    private $login;
-    private $password;
-    private $groupId;
+    private $databaseHandle;
 
-    public function __construct($ID, $name, $surname, $login, $password, $groupId) {
-        $this->ID = $ID;
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->login = $login;
-        $this->password = $password;
-        $this->groupId = $groupId;
+    public function __construct() {
+        $this->databaseHandle = Database::getInstance();
     }
 
-    public function getStudentId() {
-        return $this->ID;
+    public function changeData($setData, $teacherId, $operator) {
+        $result = $this->databaseHandle->updateData('student', $setData, $teacherId, $operator);
+        echo json_encode($result);
     }
 
-    public function setStudentId($newId) {
-        $this->ID = $newId;
+    public function changePassword($setData, $studentId, $operator) {
+        $result = $this->databaseHandle->updateData('student', $setData, $studentId, $operator);
+        echo json_encode($result);
     }
 
-    public function getStudentName() {
-        return $this->name;
+    public function checkPassword($password, $studentId) {
+        $result = $this->databaseHandle->selectData("SELECT password FROM `student` WHERE ID = '{$studentId}'");
+        return ($result[0]['password'] !== $password)?true:false;
     }
 
-    public function setStudentName($newName) {
-        $this->ID = $newName;
+    public function checkLogin($login) {
+        $result = $this->databaseHandle->selectData("SELECT login FROM `student` WHERE login = '{$login}'");
+        return (is_array($result))?false:true;
     }
 
-    public function getStudentSurname() {
-        return $this->surname;
+    public function getStudentsByGroup($groupId) {
+        $result = $this->databaseHandle->selectData("SELECT * FROM `student` WHERE group_ID = {$groupId}");
+        echo json_encode($result);
     }
 
-    public function setStudentSurname($newSurname) {
-        $this->surname = $newSurname;
+    public function addStudent($data) {
+        $result = $this->databaseHandle->insertData('student', $data);
+        $insertedStudent = $this->databaseHandle->selectData("SELECT * FROM `student` ORDER BY ID DESC LIMIT 1");
+        echo json_encode($insertedStudent);
     }
 
-    public function getStudentLogin() {
-        return $this->login;
+    public function updateStudent($setData, $conditions, $operator) {
+        $result = $this->databaseHandle->updateData('student', $setData, $conditions, $operator);
+        echo json_encode($result);
     }
 
-    public function setStudentLogin($newLogin) {
-        $this->login = $newLogin;
-    }
-
-    public function getStudentPassword() {
-        return $this->password;
-    }
-
-    public function setStudentPassword($newPassword) {
-        $this->password = $newPassword;
-    }
-
-    public function getStudentGroupId() {
-        return $this->groupId;
-    }
-
-    public function setStudentGroupId($newGroupId) {
-        $this->groupId = $newGroupId;
+    public function deleteStudent($conditions, $operator) {
+        $result = $this->databaseHandle->delete('student', $conditions, $operator);
+        echo json_encode($result);
     }
 }
 

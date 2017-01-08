@@ -286,7 +286,7 @@ $('document').ready(function () {
             "http://localhost/Repositories/eDziennik/update.php",
             {
                 table: "subject_teacher",
-                id: {ID: id},
+                conditions: {ID: id},
                 set: {
                     subject_ID: $('#editedSubjectName option:selected').val(),
                     teacher_ID: $('#editedSubjectTeacher option:selected').val()

@@ -52,7 +52,7 @@ $('document').ready(function () {
                 "update.php",
                 {
                     table: "teacher",
-                    id: {ID: button.attr("id")},
+                    conditions: {ID: button.attr("id")},
                     set: {is_active: 1},
                     operator: ''
                 },
@@ -71,7 +71,7 @@ $('document').ready(function () {
                 "update.php",
                 {
                     table: "teacher",
-                    id: {ID: button.attr("id")},
+                    conditions: {ID: button.attr("id")},
                     set: {is_active: 0},
                     operator: ''
                 },

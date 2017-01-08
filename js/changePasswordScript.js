@@ -39,7 +39,7 @@ $('document').ready(function () {
 
     $.validator.addMethod("passwordMatch",
         function(value, element) {
-            return this.optional( element ) || /([A-Za-z0-9#@*!&$_]){8,32}/.test( value );
+            return this.optional( element ) || /^([A-Za-z0-9#@*!&$_]){8,32}$/.test( value );
     });
 
     $.validator.addMethod("passwordUniqueness", function(value) {
@@ -69,7 +69,7 @@ $('document').ready(function () {
             "update.php",
             {
                 action: "changeStudentPassword",
-                id: {ID: $.cookie("ID")},
+                conditions: {ID: $.cookie("ID")},
                 set: {
                     password: $('#newStudentPassword').val(),
                     visited: 1
