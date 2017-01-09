@@ -23,12 +23,16 @@ $('document').ready(function () {
             $('#errorMessage').text("Nie można zapisać. Formularz zawiera błędy.");
     });
     $('#searchedStudentName').change(function () {
+        $('#successMessage').empty();
+        $('#notesList').empty();
+        $('#message').empty();
         displayStudentNotes();
     });
 
     $('#hideAddNoteForm').on("click", function() {
         showInsertForm = false;
         showHideInsertForm();
+        clearFormInputs();
     });
 
     $('#hideEditNoteForm').on("click", function() {
@@ -152,8 +156,15 @@ $('document').ready(function () {
                 group_ID: groupId
             },
             function (response) {
-                var students = JSON.parse(response);
-                createStudentsList(students);
+                if(JSON.parse(response)) {
+                    var students = JSON.parse(response);
+                    createStudentsList(students);
+                }
+                else {
+                    $('#searchForm').hide();
+                    $('#addNote').hide();
+                    $('#message').text("Ta grupa nie ma żadnych studentów");
+                }
             }
         );
     }
@@ -177,8 +188,14 @@ $('document').ready(function () {
                 subjectId: subjectId
             },
             function (response) {
-                var notes = JSON.parse(response);
-                createNotesList(notes);
+                if(JSON.parse(response)) {
+                    var notes = JSON.parse(response);
+                    createNotesList(notes);
+                }
+                else {
+                    $('#notesList').hide();
+                    $('#message').text("Brak ocen");
+                }
             }
         );
     }
@@ -240,14 +257,17 @@ $('document').ready(function () {
                 }
             },
             function (response) {
-                if (!JSON.parse(response)) {
+                if (!JSON.parse(response))
                     $('#errorMessage').text("Wystąpił błąd");
-                }
-                else
-                    $('#errorMessage').text("Ocena została dodana do dziennika");
+                else {
+                    $('#successMessage').text("Ocena została dodana do dziennika");
+                    $('#searchedStudentName').val("");
+                    $('#message').empty();
+                    $('#notesList').empty();
                     showInsertForm = false;
                     showHideInsertForm();
                     clearFormInputs();
+                }
             }
         );
     }

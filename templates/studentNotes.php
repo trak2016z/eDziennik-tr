@@ -6,5 +6,6 @@
         <select id="searchedSubjectName" name="subjectName"></select>
     </form>
 </div>
+<span id="message" name="message"></span>
 <table id="notesList" name="notesList"></table>
 <script src="/Repositories/eDziennik/js/studentNotesScript.js" type="text/javascript"></script>

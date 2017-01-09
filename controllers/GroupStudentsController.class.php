@@ -16,7 +16,7 @@ class GroupStudentsController extends BasicController {
 
     static public function addStudent($data) {
         self::$model = new Student();
-        $errors = self::validateStudentData($data);
+        $errors = self::validateStudentData('insert', $data);
         if(count($errors) == 0)
             self::$model->addStudent($data);
         else
@@ -25,7 +25,11 @@ class GroupStudentsController extends BasicController {
 
     static public function updateStudent($setData, $conditions, $operator) {
         self::$model = new Student();
-        self::$model->updateStudent($setData, $conditions, $operator);
+        $errors = self::validateStudentData('update', $setData);
+        if(count($errors) == 0)
+            self::$model->updateStudent($setData, $conditions, $operator);
+        else
+            echo json_encode($errors);
     }
 
     static public function deleteStudent($conditions, $operator) {
@@ -33,18 +37,20 @@ class GroupStudentsController extends BasicController {
         self::$model->deleteStudent($conditions, $operator);
     }
 
-    private static function validateStudentData($data) {
+    private static function validateStudentData($operationType, $data) {
         $errors = [];
         if(!Validation::checkPatternCompatibility('nameSurname', $data['name']))
             $errors[] = "Niepoprawna wartoœæ w polu Imiê";
         if(!Validation::checkPatternCompatibility('nameSurname', $data['surname']))
             $errors[] = "Niepoprawna wartoœæ w polu Nazwisko";
-        if(!Validation::checkPatternCompatibility('login', $data['login']))
-            $errors[] = "Niepoprawna wartoœæ w polu Login";
-        if(!Validation::checkPatternCompatibility('password', $data['password']))
-            $errors[] = "Niepoprawna wartoœæ w polu Has³o";
         if(!Validation::isId($data['group_ID']))
             $errors[] = "Id grupy nie jest poprawne";
+        if($operationType == 'insert') {
+            if (!Validation::checkPatternCompatibility('login', $data['login']))
+                $errors[] = "Niepoprawna wartoœæ w polu Login";
+            if (!Validation::checkPatternCompatibility('password', $data['password']))
+                $errors[] = "Niepoprawna wartoœæ w polu Has³o";
+        }
         return $errors;
     }
 }

@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="logout">
-    <span>Menu</span>
+    <span>eDziennik</span>
     <input type="button" id="userAccountButton" name="userAccountButton" value="Moje konto" />
     <input type="button" id="logOutButton" name="logOutButton" value="Wyloguj" />
 </div>

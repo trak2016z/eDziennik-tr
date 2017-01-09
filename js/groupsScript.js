@@ -1,5 +1,6 @@
 $('document').ready(function () {
     hideLinks();
+    hideInsertGroupButton();
     var showEditForm = false;
     var showInsertForm = false;
     //Ukrycie formularza edycji
@@ -24,6 +25,7 @@ $('document').ready(function () {
     $('#hideAddGroupForm').on("click", function() {
         showInsertForm = false;
         showHideInsertForm();
+        clearFormInputs();
     });
 
     $('#hideEditGroupForm').on("click", function() {
@@ -31,9 +33,15 @@ $('document').ready(function () {
         showHideEditForm();
     });
 
-    function hideButtons() {
+    function hideEditDeleteButtons() {
         if(parseInt($.cookie("type")) !== 1) {
-            $('input:button[value="Edytuj"], input:button[value="Usuń"], input:button[value="Dodaj grupę"]').hide();
+            $('input:button[value="Edytuj"], input:button[value="Usuń"]').hide();
+        }
+    }
+
+    function hideInsertGroupButton() {
+        if(parseInt($.cookie("type")) !== 1) {
+            $('input:button[value="Dodaj grupę"]').hide();
         }
     }
 
@@ -49,13 +57,20 @@ $('document').ready(function () {
         "get.php",
         {
             table: "group",
-            teacher_ID: $.cookie("ID"),
+            teacherId: $.cookie("ID"),
             type: $.cookie("type")
         },
         function(response){
-            var groups = JSON.parse(response);
-            createGroupsList(groups);
-            hideButtons();
+            if(JSON.parse(response)) {
+             //   console.log(response);
+                var groups = JSON.parse(response);
+                createGroupsList(groups);
+                hideEditDeleteButtons();
+            }
+            else {
+                $('#groupsList').hide();
+                $('#message').text("Brak grup");
+            }
         }
     );
 

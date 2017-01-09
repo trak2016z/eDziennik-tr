@@ -31,7 +31,7 @@ class GroupSubjectsController extends BasicController {
 
     static public function addGroupSubject($data) {
         self::$model = new SubjectTeacher();
-        $errors = self::validateGroupSubject($data);
+        $errors = self::validateGroupSubject('insert', $data);
         if(count($errors) == 0)
             self::$model->addGroupSubject($data);
         else
@@ -40,7 +40,11 @@ class GroupSubjectsController extends BasicController {
 
     static public function updateGroupSubject($setData, $conditions, $operator) {
         self::$model = new SubjectTeacher();
-        self::$model->updateGroupSubject($setData, $conditions, $operator);
+        $errors = self::validateGroupSubject('update', $setData);
+        if(count($errors) == 0)
+            self::$model->updateGroupSubject($setData, $conditions, $operator);
+        else
+            echo json_encode($errors);
     }
 
     static public function deleteGroupSubject($conditions, $operator) {
@@ -48,14 +52,15 @@ class GroupSubjectsController extends BasicController {
         self::$model->deleteGroupSubject($conditions, $operator);
     }
 
-    private static function validateGroupSubject($data) {
+    private static function validateGroupSubject($operationType, $data) {
         $errors = [];
         if(!Validation::isId($data['subject_ID']))
             $errors[] = "Id przedmiotu nie jest poprawne";
         if(!Validation::isId($data['teacher_ID']))
             $errors[] = "Id nauczyciela nie jest poprawne";
-        if(!Validation::isId($data['group_ID']))
-            $errors[] = "Id grupy nie jest poprawne";
+        if($operationType == "insert")
+            if(!Validation::isId($data['group_ID']))
+                $errors[] = "Id grupy nie jest poprawne";
         return $errors;
     }
 }

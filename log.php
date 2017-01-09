@@ -4,7 +4,7 @@ require_once("config.php");
 require_once("loader.php");
 
 $login = Data::getData('login');
-$password = Data::getData('password');
+$password = sha1(Data::getData('password'));
 
 $databaseHandle = Database::getInstance();
 $result = $databaseHandle->selectData("SELECT ID, name, surname, login, type, is_active FROM `teacher` WHERE login = '{$login}' AND password = '{$password}'");

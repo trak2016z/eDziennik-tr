@@ -1,4 +1,5 @@
 <span id="errorMessage" name="errorMessage"></span>
+<span id="successMessage" name="successMessage"></span>
 <div>
     <form id="userDataForm">
         <fieldset>

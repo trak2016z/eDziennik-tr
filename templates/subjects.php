@@ -27,5 +27,6 @@
         <input type="submit" id="updateSubjectName" name="updateSubjectName" value="Zapisz" />
     </form>
 </div>
+<span id="message" name="message"></span>
 <table id="subjectsList" name="subjectsList"></table>
 <script src="js/subjectsScript.js" type="text/javascript"></script>

@@ -1,13 +1,13 @@
 $('document').ready(function () {
     var groupId, studentId;
-    //Ustawienie odpowiedniego id w odnoúniku do zak≥adki "Przedmioty"
+    //Ustawienie odpowiedniego id w odno≈õniku do zak≈Çadki "Przedmioty"
     changeUrlParameter();
     getAllSubjects();
     $('#searchedSubjectName').change(function () {
         displayStudentNotes();
     });
 
-//Funkcja zmieniajπca atrybut href odnoúnika do zak≥adki "Przedmioty"
+//Funkcja zmieniajƒÖca atrybut href odno≈õnika do zak≈Çadki "Przedmioty"
     function changeUrlParameter() {
         var linkToUpdate = $('a').eq(1).attr('href');
         var currentUrl = location.href.split("/");
@@ -23,8 +23,14 @@ $('document').ready(function () {
                 groupId: groupId
             },
             function (response) {
-                var subjects = JSON.parse(response);
-                createSubjectsList(subjects);
+                if(JSON.parse(response)) {
+                    var subjects = JSON.parse(response);
+                    createSubjectsList(subjects);
+                }
+                else {
+                    $('#searchForm').hide();
+                    $('#message').text("Ta grupa nie ma przypisanych ≈ºadnych przedmiot√≥w");
+                }
             }
         );
     }
@@ -45,8 +51,14 @@ $('document').ready(function () {
                 studentId: studentId
             },
             function (response) {
-                var notes = JSON.parse(response);
-                createNotesList(notes);
+                if(JSON.parse(response)) {
+                    var notes = JSON.parse(response);
+                    createNotesList(notes);
+                }
+                else {
+                    $('#notesList').hide();
+                    $('#message').text("Brak ocen");
+                }
             }
         );
     }

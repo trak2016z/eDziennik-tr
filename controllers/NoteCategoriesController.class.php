@@ -35,7 +35,11 @@ class NoteCategoriesController extends BasicController {
 
     static public function updateNoteCategory($setData, $conditions, $operator) {
         self::$model = new NoteCategory();
-        self::$model->updateNoteCategory($setData, $conditions, $operator);
+        $errors = self::validateNoteCategoryName($setData);
+        if(count($errors) == 0)
+            self::$model->updateNoteCategory($setData, $conditions, $operator);
+        else
+            echo json_encode($errors);
     }
 
     static public function deleteNoteCategory($conditions, $operator) {

@@ -27,5 +27,6 @@
         <input type="submit" id="updateGroupName" name="updateGroupName" value="Zapisz" />
     </form>
 </div>
+<span id="message" name="message"></span>
 <table id="groupsList" name="groupsList"></table>
 <script src="<?php echo "js/groupsScript.js"?>" type="text/javascript"></script>

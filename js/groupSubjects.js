@@ -25,6 +25,7 @@ $('document').ready(function () {
     $('#hideAddGroupSubjectForm').on("click", function() {
         showInsertForm = false;
         showHideInsertForm();
+        clearFormInputs();
     });
 
     $('#hideEditGroupSubjectForm').on("click", function() {
@@ -138,8 +139,14 @@ $('document').ready(function () {
                 groupId: groupId
             },
             function (response) {
-                var subjects = JSON.parse(response);
-                createSubjectsTeacherList(subjects);
+                if(JSON.parse(response)) {
+                    var subjects = JSON.parse(response);
+                    createSubjectsTeacherList(subjects);
+                }
+                else {
+                    $('#subjectsList').hide();
+                    $('#message').text("Grupa nie ma przypisanych żadnych przedmiotów");
+                }
             }
         );
     }

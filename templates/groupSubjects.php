@@ -32,5 +32,6 @@
         <input type="submit" id="updateGroupSubject" name="updateGroupSubject" value="Zapisz" />
     </form>
 </div>
+<span id="message" name="message"></span>
 <table id="subjectsList" name="subjectsList"></table>
 <script src="/Repositories/eDziennik/js/groupSubjects.js" type="text/javascript"></script>

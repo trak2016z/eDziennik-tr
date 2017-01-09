@@ -29,6 +29,7 @@ $('document').ready(function () {
     $('#hideAddStudentForm').on("click", function() {
         showInsertForm = false;
         showHideInsertForm();
+        clearFormInputs();
     });
 
     $('#hideEditStudentForm').on("click", function() {
@@ -141,8 +142,14 @@ $('document').ready(function () {
                 group_ID: groupId
             },
             function (response) {
-                var studentsOfGroup = JSON.parse(response);
-                createStudentsList(studentsOfGroup);
+                if(JSON.parse(response)) {
+                    var studentsOfGroup = JSON.parse(response);
+                    createStudentsList(studentsOfGroup);
+                }
+                else {
+                    $('#studentsList').hide();
+                    $('#message').text("Brak studentów");
+                }
             }
         );
     }
@@ -196,8 +203,8 @@ $('document').ready(function () {
             "http://localhost/Repositories/eDziennik/get.php",
             {
                 table: "group",
-                teacher_ID: $.cookie("ID"),
-                type: $.cookie("type")
+               // teacher_ID: $.cookie("ID"),
+                type: 0
             },
             function (response) {
                 groups = JSON.parse(response);
@@ -208,7 +215,6 @@ $('document').ready(function () {
 
 //Funkcja wstawiająca pobrane grupy do elementu select w formularzu dodawania studenta
     function createGroupsList(groups) {
-        $("[name='groupName']").append($('<option>'));
         for (var key in groups) {
             $("[name='groupName']").append($('<option>', {value: groups[key].ID, text: groups[key].name}));
         }

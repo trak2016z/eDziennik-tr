@@ -51,5 +51,6 @@
         <input type="submit" id="updateStudent" name="updateStudent" value="Zapisz" />
     </form>
 </div>
+<span id="message" name="message"></span>
 <table id="studentsList" name="studentsList"></table>
 <script src="/Repositories/eDziennik/js/groupStudents.js" type="text/javascript"></script>

@@ -84,7 +84,8 @@ $('document').ready(function () {
                 set: {
                     name: $('#userName').val(),
                     surname: $('#userSurname').val(),
-                    password: $('#newUserPassword').val()
+                    password: $('#newUserPassword').val(),
+                    passwordAgain: $('#newUserPasswordAgain').val()
                 },
                 operator: ""
             },
@@ -94,6 +95,7 @@ $('document').ready(function () {
                     $.cookie("surname", $('#userSurname').val());
                     $('#userName').val($.cookie("name"));
                     $('#userSurname').val($.cookie("surname"));
+                    $('#successMessage').text("Twoje dane zostały zaktualizowane");
                 }
                 else
                     $('#errorMessage').text("Wystąpił błąd");

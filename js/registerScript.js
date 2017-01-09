@@ -15,7 +15,7 @@ $('document').ready(function () {
              },
              function(data){
                 if(JSON.parse(data))
-                    $('#errorMessage').text("Zostałeś poprawnie zarejestrowany");
+                    $('#successMessage').text("Zostałeś poprawnie zarejestrowany");
                  else
                     $('#errorMessage').text("Wystąpił błąd");
              }

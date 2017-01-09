@@ -27,5 +27,6 @@
         <input type="submit" id="updateNoteCategoryName" name="updateNoteCategoryName" value="Zapisz" />
     </form>
 </div>
+<span id="message" name="message"></span>
 <table id="noteCategoriesList" name="noteCategoriesList"></table>
 <script src="js/noteCategoriesScript.js" type="text/javascript"></script>

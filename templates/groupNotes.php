@@ -1,5 +1,6 @@
 <p>Oceny</p>
 <span id="errorMessage" name="errorMessage"></span>
+<span id="successMessage" name="successMessage"></span>
 <input type="button" id="addNote" name="addNote" value="Dodaj ocenę" />
 <div>
     <form id="insertNoteForm">
@@ -55,5 +56,6 @@
         <select id="searchedStudentName" name="studentName"></select>
     </form>
 </div>
+<span id="message" name="message"></span>
 <table id="notesList" name="notesList"></table>
 <script src="/Repositories/eDziennik/js/groupNotesScript.js" type="text/javascript"></script>

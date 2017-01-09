@@ -20,6 +20,7 @@ $('document').ready(function () {
     $('#hideAddSubjectForm').on("click", function() {
         showInsertForm = false;
         showHideInsertForm();
+        clearFormInputs();
     });
 
     $('#hideEditSubjectForm').on("click", function() {
@@ -33,8 +34,14 @@ $('document').ready(function () {
             table: "subject"
         },
         function(response){
-            var subjects = JSON.parse(response);
-            createSubjectsList(subjects);
+            if(JSON.parse(response)) {
+                var subjects = JSON.parse(response);
+                createSubjectsList(subjects);
+            }
+            else {
+                $('#subjectsList').hide();
+                $('#message').text("Brak przedmiotów");
+            }
         }
     );
 
@@ -92,7 +99,6 @@ $('document').ready(function () {
             },
             success: function(d){
                 responseValue = JSON.parse(d);
-                console.log(responseValue);
             },
             error: function(request, error){
                  console.log(arguments);
@@ -143,7 +149,6 @@ $('document').ready(function () {
     }
 
     function completeTextField(subjectName, id) {
-        console.log(subjectName);
         $('#editedSubjectName').val(subjectName);
         $('#editedSubjectName').attr("data-id", id);
     }

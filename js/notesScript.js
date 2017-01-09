@@ -13,9 +13,15 @@ $('document').ready(function () {
                 groupId: $.cookie("groupID")
             },
             function (response) {
-                var studentsSubjects = JSON.parse(response);
-                createStudentSubjectsList(studentsSubjects);
-                getStudentNotes();
+                if(JSON.parse(response)) {
+                    var studentsSubjects = JSON.parse(response);
+                    createStudentSubjectsList(studentsSubjects);
+                    getStudentNotes();
+                }
+                else {
+                    $('#studentSubjectName').hide();
+                    $('#message').text("Twoja grupa nie ma przypisanych żadnych przedmiotów");
+                }
             }
         )
     }
@@ -35,8 +41,14 @@ $('document').ready(function () {
                 subjectId: $('#studentSubjectName option:selected').val()
             },
             function (response) {
-                var studentsNotes = JSON.parse(response);
-                createStudentNotesList(studentsNotes);
+                if(JSON.parse(response)) {
+                    var studentsNotes = JSON.parse(response);
+                    createStudentNotesList(studentsNotes);
+                }
+                else {
+                    $('#studentNotesList').hide();
+                    $('#message').text("Brak ocen z tego przedmiotu");
+                }
             }
         )
     }

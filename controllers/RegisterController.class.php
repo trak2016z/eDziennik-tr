@@ -13,6 +13,7 @@ class RegisterController extends BasicController {
         self::$model = new Teacher();
         $errors = self::validateTeacherData($data);
         if(count($errors) == 0) {
+            $data['password'] = sha1($data['password']);
             unset($data['passwordAgain']);
             self::$model->addTeacher($data);
         }

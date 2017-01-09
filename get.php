@@ -12,7 +12,7 @@ if($table)
                                 break;
         case 'subject':         SubjectsController::getAllSubjects();
                                 break;
-        case 'group':           if(Data::getData("type") == 1)
+        case 'group':           if((Data::getData("type") == 1)||(Data::getData("type") == 0))
                                     GroupsController::getAllGroups();
                                 else {
                                     $teacherId = Data::getData('teacherId');

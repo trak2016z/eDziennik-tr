@@ -21,6 +21,7 @@ $('document').ready(function () {
     $('#hideAddNoteCategoryForm').on("click", function() {
         showInsertForm = false;
         showHideInsertForm();
+        clearFormInputs();
     });
 
     $('#hideEditNoteCategoryForm').on("click", function() {
@@ -42,8 +43,14 @@ $('document').ready(function () {
             teacherId: $.cookie("ID")
         },
         function (response) {
-            var noteCategories = JSON.parse(response);
-            createNoteCategoriesList(noteCategories);
+            if(JSON.parse(response)) {
+                var noteCategories = JSON.parse(response);
+                createNoteCategoriesList(noteCategories);
+            }
+            else {
+                $('#noteCategoriesList').hide();
+                $('#message').text("Brak kategorii");
+            }
         }
     );
 

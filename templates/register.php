@@ -1,4 +1,5 @@
 <span id="errorMessage" name="errorMessage"></span>
+<span id="successMessage" name="successMessage"></span>
 <form id="registerForm" name="registerForm">
     <fieldset>
         <label for="name">Name: </label>

@@ -72,6 +72,7 @@ $('document').ready(function () {
                 conditions: {ID: $.cookie("ID")},
                 set: {
                     password: $('#newStudentPassword').val(),
+                    passwordAgain: $('#newStudentPasswordAgain').val(),
                     visited: 1
                 },
                 operator: ""

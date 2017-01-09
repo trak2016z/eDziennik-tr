@@ -40,7 +40,11 @@ class GroupsController extends BasicController {
 
     static public function updateGroup($setData, $conditions, $operator) {
         self::$model = new Group();
-        self::$model->updateGroup($setData, $conditions, $operator);
+        $errors = self::validateGroupName($setData);
+        if(count($errors) == 0)
+            self::$model->updateGroup($setData, $conditions, $operator);
+        else
+            echo json_encode($errors);
     }
 
     static public function deleteGroup($conditions, $operator) {

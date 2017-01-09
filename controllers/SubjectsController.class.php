@@ -35,7 +35,11 @@ class SubjectsController extends BasicController {
 
     static public function updateSubject($setData, $conditions, $operator) {
         self::$model = new Subject();
-        self::$model->updateSubject($setData, $conditions, $operator);
+        $errors = self::validateSubjectName($setData);
+        if(count($errors) == 0)
+            self::$model->updateSubject($setData, $conditions, $operator);
+        else
+            echo json_encode($errors);
     }
 
     static public function deleteSubject($conditions, $operator) {

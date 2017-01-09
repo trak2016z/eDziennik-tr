@@ -6,5 +6,6 @@
 </ul>
 <span>Nauczyciele</span>
 <span id="errorMessage" name="errorMessage"></span>
-<table id="teachersList" name="techarsList"></table>
+<span id="message" name="message"></span>
+<table id="teachersList" name="teachersList"></table>
 <script src="js/teachersScript.js" type="text/javascript"></script>

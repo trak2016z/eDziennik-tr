@@ -6,8 +6,14 @@ $('document').ready(function () {
             table: "teacher"
         },
         function (response) {
-            var teachers = JSON.parse(response);
-            createTeachersList(teachers);
+            if(JSON.parse(response)) {
+                var teachers = JSON.parse(response);
+                createTeachersList(teachers);
+            }
+            else {
+                $('#teachersList').hide();
+                $('#message').text("Brak zarejestrowanych nauczycieli");
+            }
         }
     );
 
