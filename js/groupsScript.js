@@ -62,7 +62,6 @@ $('document').ready(function () {
         },
         function(response){
             if(JSON.parse(response)) {
-             //   console.log(response);
                 var groups = JSON.parse(response);
                 createGroupsList(groups);
                 hideEditDeleteButtons();

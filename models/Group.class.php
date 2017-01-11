@@ -24,7 +24,7 @@ class Group {
     }
 
     public function getTeacherGroups($teacherId) {
-        $result = $this->databaseHandle->selectData("SELECT * FROM `group` g JOIN `subject_teacher` st ON g.ID = st.group_ID WHERE st.teacher_ID = {$teacherId}");
+        $result = $this->databaseHandle->selectData("SELECT g.ID, g.name FROM `group` g JOIN `subject_teacher` st ON g.ID = st.group_ID WHERE st.teacher_ID = {$teacherId}");
         echo json_encode($result);
     }
 

@@ -3,6 +3,9 @@ $('document').ready(function () {
     var showEditForm = false;
     var showAddedStudentData = false;
     var groupId, groups;
+
+    hideInsertStudentButton();
+
     //Ustawienie odpowiedniego id w odnośniku do zakładki "Przedmioty"
     changeUrlParameter();
     //Ukrycie formularza dodawania studenta
@@ -25,6 +28,18 @@ $('document').ready(function () {
         else
             $('#errorMessage').text("Nie można zapisać. Formularz zawiera błędy.");
     });
+
+    function hideInsertStudentButton() {
+        if(parseInt($.cookie("type")) !== 1) {
+            $('input:button[value="Dodaj ucznia"]').hide();
+        }
+    }
+
+    function hideDeleteButtons() {
+        if(parseInt($.cookie("type")) !== 1) {
+            $('input:button[value="Usuń"]').hide();
+        }
+    }
 
     $('#hideAddStudentForm').on("click", function() {
         showInsertForm = false;
@@ -145,6 +160,7 @@ $('document').ready(function () {
                 if(JSON.parse(response)) {
                     var studentsOfGroup = JSON.parse(response);
                     createStudentsList(studentsOfGroup);
+                    hideDeleteButtons();
                 }
                 else {
                     $('#studentsList').hide();
@@ -345,12 +361,14 @@ $('document').ready(function () {
     };
 
     function appendStudent(studentData) {
+        console.log(studentData);
         var tableRow = "<tr><td><a href='/Repositories/eDziennik/groups/" + groupId + "/students/" + studentData.ID + "'><span id='studentName_" + studentData.ID + "'>"
             + studentData.name + "</span> <span id='studentSurname_" + studentData.ID + "'>" + studentData.surname + "</span></a></td><td>" + createEditButton(studentData.ID) + "</td><td>" +
             createDeleteButton(studentData.ID) + "</td></tr>";
         $('#studentsList').append(tableRow);
         setEditEvent(studentData.ID);
         setDeleteEvent(studentData.ID);
+       // $('#message').empty();
     }
 
 //Funkcja tworząca przycisk edycji

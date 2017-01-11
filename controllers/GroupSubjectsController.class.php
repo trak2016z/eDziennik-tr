@@ -19,9 +19,14 @@ class GroupSubjectsController extends BasicController {
         echo json_encode($result);
     }
 
-    static public function getGroupSubjects($groupId) {
+    static public function getAllGroupSubjects($groupId) {
         self::$model = new SubjectTeacher();
-        self::$model->getGroupSubjects($groupId);
+        self::$model->getAllGroupSubjects($groupId);
+    }
+
+    static public function getGroupSubjectsByTeacher($groupId, $teacherId) {
+        self::$model = new SubjectTeacher();
+        self::$model->getGroupSubjectsByTeacher($groupId, $teacherId);
     }
 
     static public function getStudentSubjects($studentGroupId) {

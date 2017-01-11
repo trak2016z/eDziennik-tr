@@ -26,7 +26,12 @@ if($table)
                                 GroupStudentsController::getStudentsByGroup($groupId);
                                 break;
         case 'subject_teacher': $groupId = Data::getData('groupId');
-                                GroupSubjectsController::getGroupSubjects($groupId);
+                                if(Data::getData("type") == 2) {
+                                    $teacherId = Data::getData('teacherId');
+                                    GroupSubjectsController::getGroupSubjectsByTeacher($groupId, $teacherId);
+                                }
+                                else
+                                    GroupSubjectsController::getAllGroupSubjects($groupId);
                                 break;
         case 'group_notes':     $studentId = Data::getData("studentId");
                                 $subjectId = Data::getData("subjectId");

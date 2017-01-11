@@ -2,6 +2,7 @@ $('document').ready(function () {
     var showInsertForm = false;
     var showEditForm = false;
     var groupId;
+    hideInsertSubjectButton();
     changeUrlParameter();
     getSubjectsOfGroup();
     showHideInsertForm();
@@ -21,6 +22,18 @@ $('document').ready(function () {
         else
             $('#errorMessage').text("Nie można zapisać. Formularz zawiera błędy.");
     });
+
+    function hideEditDeleteButtons() {
+        if(parseInt($.cookie("type")) !== 1) {
+            $('input:button[value="Edytuj"], input:button[value="Usuń"]').hide();
+        }
+    }
+
+    function hideInsertSubjectButton() {
+        if(parseInt($.cookie("type")) !== 1) {
+            $('input:button[value="Dodaj przedmiot"]').hide();
+        }
+    }
 
     $('#hideAddGroupSubjectForm').on("click", function() {
         showInsertForm = false;
@@ -136,12 +149,15 @@ $('document').ready(function () {
             "http://localhost/Repositories/eDziennik/get.php",
             {
                 table: "subject_teacher",
-                groupId: groupId
+                groupId: groupId,
+                teacherId: $.cookie("ID"),
+                type: $.cookie("type")
             },
             function (response) {
                 if(JSON.parse(response)) {
                     var subjects = JSON.parse(response);
                     createSubjectsTeacherList(subjects);
+                    hideEditDeleteButtons();
                 }
                 else {
                     $('#subjectsList').hide();

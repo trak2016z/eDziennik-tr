@@ -16,7 +16,7 @@ class Note {
 
     public function addNote($data) {
         $result = $this->databaseHandle->insertData('note', $data);
-        echo json_encode($result);
+        echo json_encode($data);
     }
 
     public function updateNote($setData, $conditions, $operator) {
